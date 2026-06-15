@@ -107,6 +107,7 @@ def run_code_sequence(code):
         current_layout_idx = (current_layout_idx + 1) % len(LAYOUTS)
 
     # 2. Type the code
+    first_char = True
     for char in code:
         target_layout_idx = next(idx for idx, L in enumerate(LAYOUTS) if find_char(L, char) is not None)
         if current_layout_idx != target_layout_idx:
@@ -116,6 +117,10 @@ def run_code_sequence(code):
         curr_r, curr_c = tgt_r, tgt_c
         press(KEY_A)
         time.sleep(CONFIRM_DELAY)
+        
+        if first_char and current_layout_idx == 0:
+            current_layout_idx = 1
+        first_char = False
 
     # 3. Submit and Post-Sequence
     press(KEY_START)
